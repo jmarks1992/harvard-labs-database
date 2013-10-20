@@ -29,6 +29,7 @@ for site in outersoup.find_all('a'):
 
 
 for link in LINKS:
+   #Using a list of class instances in lieu of a database for now
    entry=lab()
    #Opens Page
    page = urllib2.urlopen(link).read()
@@ -50,7 +51,7 @@ for link in LINKS:
                   if not paragraph.b:
                      entry.descrip=entry.descrip+"\n"+str(unicode(paragraph.get_text()).encode('ascii', 'ignore')) #Harvard profs don't understand Unicode
                      
-   #print entry.name+"\n"+entry.email+"\n"+entry.website+"\n"+entry.title+"\n"+entry.descrip
+   #Adds the scraped results to the list of class instances
    labs.append(entry)
 
 
