@@ -17,7 +17,6 @@ class lab:
       self.name=''
       self.email=''
       self.website=''
-      self.title=''
       self.descrip=''
 labs=[]     
       
@@ -61,7 +60,7 @@ for link in LINKS:
 # Peter, I am going to add a bit of code to convert your class into a DataFrame.
 labs_df = pd.DataFrame();
 for lab in labs:
-   single_df = pd.DataFrame({'PI_name': lab.name, 'PI_email': lab.email, 'lab_website': lab.website, 'lab_title': lab.title, 'lab_desc': lab.desc})
+   single_df = pd.DataFrame({'PI_name': lab.name, 'PI_email': lab.email, 'lab_website': lab.website,'lab_descrip': lab.descrip})
    pd.concat(single_df, labs_df)
 
 # it's really much easier to run these things as a ipython notebook. Easier to explore the data.
