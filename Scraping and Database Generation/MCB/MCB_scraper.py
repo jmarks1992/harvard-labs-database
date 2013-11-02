@@ -4,8 +4,8 @@
 
 import sys
 import urllib2
+from bs4 import BeautifulSoup, NavigableString, Tag
 from pattern.web import URL, DOM, plaintext, strip_tags
-from bs4 import BeautifulSoup
 import csv
 
 labs=[]     
@@ -48,6 +48,17 @@ for link in LINKS:
                   if not paragraph.b:
                      entry["lab_desc"]=entry["lab_desc"]+str(unicode(paragraph.get_text()).encode('ascii', 'ignore'))+"\n"
                      #Harvard profs don't understand Unicode
+                        
+   for br in innersoup.findAll('br'):
+       next = br.nextSibling
+       if not (next and isinstance(next,NavigableString)):
+           continue
+       next2 = next.nextSibling
+       if next2 and isinstance(next2,Tag) and next2.name == 'br':
+           text = str(unicode(next).encode('ascii', 'ignore')).strip()
+           
+           if "Biological" in text or "Northwest" in text or "Sherman Fairchild" in text:#Complete lack of regularities in building names besides everyone being in the same three buildings forced me to hardcode the names :( 
+               entry["building"]=text
    entry["lab_desc"]=entry["lab_desc"]+"\""
                      
    #Adds the scraped results to the list of dicts
@@ -60,9 +71,10 @@ csvwriter=csv.DictWriter(outfile, fields, dialect='excel')
 csvwriter.writeheader()
 for thelab in labs:
       csvwriter.writerow(thelab)
-   
 outfile.close()
-#Proof-of-concept:   
+
+
+#Text file (for testing):
 output=open("mcblabs.txt", 'w')   
 for thelab in labs:
    output.writelines(thelab["PI_name"]+"\n"+thelab["PI_email"]+"\n"+thelab["lab_url"]+"\n"+thelab["lab_desc"]+"\n\n") 
