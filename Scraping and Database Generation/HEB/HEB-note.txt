@@ -1,0 +1,1 @@
+HEB website is terribly structured and contains very little info.  Recommend manual data extraction--should take less time.
