@@ -1,1 +1,6 @@
+To run the baby server:
 py manage.py runserver
+
+To sync csv files:
+pip install django-csvimport
+Then use the admin for everything else
